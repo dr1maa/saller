@@ -4,7 +4,11 @@
     <title>Обмен Товарами</title>
 </head>
 <body>
-<h1>Обмен Товарами</h1><hr>
+<h1>Обмен Товарами | <a href="/login">Войти</a></h1><hr>
+<form action ="/logout" method ="post">
+    <input type="hidden" name ="_csrf" value="@{_csrf.token}">
+    <input type="submit" value="выйти"/>
+</form>
 <h4>Товары со всей России</h4>
 <form action = "/" method = "get">
     Поиск по названию: <input type ="text" name = "title" ><br>
