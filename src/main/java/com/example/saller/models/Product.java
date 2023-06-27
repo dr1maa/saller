@@ -1,8 +1,5 @@
 package com.example.saller.models;
 
-
-
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,19 +27,20 @@ public class Product {
     private int price;
     @Column(name = "city")
     private String city;
-    @Column(name = "author")
-    private String author;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
             mappedBy = "product")
+
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
+    @JoinColumn
+    private User user;
     private LocalDateTime dateOfCreated;
 
     @PrePersist
     private void init() {
         dateOfCreated = LocalDateTime.now();
     }
-
 
     public void addImageToProduct(Image image) {
         image.setProduct(this);
