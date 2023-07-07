@@ -37,8 +37,8 @@ public class User implements UserDetails {
     private Image avatar;
     private boolean active;
     private String activationCode;
-    @Column(length = 100)
-    @Size(min = 2, max = 10)
+    @Column(length = 1000)
+//    @Size(min = 2, max = 10)
     private String password;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
