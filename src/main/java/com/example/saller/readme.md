@@ -31,3 +31,5 @@
 spring.datasource.url=jdbc:mysql://localhost:8889/saller
 spring.datasource.username=root
 spring.datasource.password=root
+
+https://github.com/dr1maa/saller/tree/master/src/main/resources/static/images/screenshot
