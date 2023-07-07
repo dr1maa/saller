@@ -25,4 +25,5 @@
     <#if errorMessage??>
         <h2 style="color: red">${errorMessage}</h2>
     </#if>
+
 </@t.template>

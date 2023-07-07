@@ -31,12 +31,13 @@
                     <option value="Москва">Москва</option>
                     <option value="Красноярск">Красноярск</option>
                     <option value="Казань">Казань</option>
+                    <option value="Воронеж">Воронеж</option>
 
                 </select>
             </div>
             <div class="form-group">
                 <label for="description">Описание товара</label>
-                <textarea required class="form-control" id="description" name="description"></textarea>
+                <textarea class="form-control" id="description" name="description"></textarea>
             </div>
             <div class="form-group">
                 <div class="custom-file">

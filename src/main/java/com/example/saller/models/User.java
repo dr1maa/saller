@@ -4,18 +4,32 @@ import com.example.saller.models.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
 @Table(name = "users")
+
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true, updatable = false)
+    @Email
+    @NotBlank
+    @Size(min = 1, max = 20)
     private String email;
+    @Pattern(regexp = "\\d{1}-\\d{3}-\\d{3}-\\d{2}-\\d{2}", message = "Номер телефона должен быть в формате +7 (XXX) XXX-XX-XX")
+    @NotBlank
     private String phoneNumber;
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "Имя должно состоять только из латинских букв")
+    @NotBlank
+    @Size(min = 1, max = 10)
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -23,7 +37,8 @@ public class User implements UserDetails {
     private Image avatar;
     private boolean active;
     private String activationCode;
-    @Column(length = 1000)
+    @Column(length = 100)
+    @Size(min = 2, max = 10)
     private String password;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

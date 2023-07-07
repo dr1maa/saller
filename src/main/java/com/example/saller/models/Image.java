@@ -1,6 +1,9 @@
 package com.example.saller.models;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "images")
@@ -11,6 +14,9 @@ public class Image {
     private String name;
     private String originalFileName;
     private Long size;
+    @Column(name = "content_type")
+    @NotNull(message = "Content type is required")
+    @Pattern(regexp = "(image/jpeg)", message = "Only JPEG and PNG images are allowed")
     private String contentType;
     private boolean previewImage;
     @Lob

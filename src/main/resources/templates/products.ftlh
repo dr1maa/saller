@@ -8,6 +8,7 @@
                 <select id="searchCity" class="form-control">
                     <option value="">Город не выбран</option>
                     <option value="Москва">Москва</option>
+                    <option value="Воронеж">Воронеж</option>
                     <option value="Красноярск">Красноярск</option>
                     <option value="Казань">Казань</option>
                 </select>

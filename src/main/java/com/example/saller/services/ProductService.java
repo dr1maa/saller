@@ -7,9 +7,12 @@ import com.example.saller.repositories.ProductRepository;
 import com.example.saller.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
@@ -26,7 +29,13 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public void saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
+    public ResponseEntity<String> saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
+        if (    (file1 == null || file1.getSize() == 0 || !file1.getContentType().equals(MediaType.IMAGE_JPEG_VALUE)) &&
+                (file2 == null || file2.getSize() == 0 || !file2.getContentType().equals(MediaType.IMAGE_JPEG_VALUE)) &&
+                (file3 == null || file3.getSize() == 0 || !file3.getContentType().equals(MediaType.IMAGE_JPEG_VALUE))) {
+            return ResponseEntity.badRequest().body("Разрешенный формат *.jpeg");
+        }
+
         product.setUser(getUserByPrincipal(principal));
         Image image1;
         Image image2;
@@ -48,6 +57,7 @@ public class ProductService {
         Product productFromDb = productRepository.save(product);
         productFromDb.setPreviewImageId(productFromDb.getImages().get(0).getId());
         productRepository.save(product);
+        return null;
     }
 
     public User getUserByPrincipal(Principal principal) {
@@ -65,6 +75,7 @@ public class ProductService {
         return image;
     }
 
+    @Transactional
     public void deleteProduct(User user, Long id) {
         Product product = productRepository.findById(id)
                 .orElse(null);
@@ -77,7 +88,8 @@ public class ProductService {
             }
         } else {
             log.error("Product with id = {} is not found", id);
-        }    }
+        }
+    }
 
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElse(null);

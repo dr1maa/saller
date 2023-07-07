@@ -5,13 +5,19 @@ import com.example.saller.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
+
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -38,11 +44,31 @@ public class UserController {
 
 
     @PostMapping("/registration")
-    public String createUser(User user, Model model) {
+    public String createUser(@Valid User user, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            if (bindingResult.hasFieldErrors("email")) {
+                FieldError emailError = bindingResult.getFieldError("email");
+                model.addAttribute("errorMessage","Неверный Email");
+            }
+            if (bindingResult.hasFieldErrors("phoneNumber")) {
+                FieldError phoneNumberError = bindingResult.getFieldError("phoneNumber");
+                model.addAttribute("errorMessage", "Неверный формат номера телефона");
+            }
+            if (bindingResult.hasFieldErrors("name")) {
+                FieldError nameError = bindingResult.getFieldError("name");
+                model.addAttribute("errorMessage", "Ошибка в имени");
+            }
+            if (bindingResult.hasFieldErrors("password")) {
+                FieldError passwordError = bindingResult.getFieldError("password");
+                model.addAttribute("errorMessage", "Пароль слишком длинный");
+            }
+            return "registration";
+        }
         if (!userService.createUser(user)) {
             model.addAttribute("errorMessage", "Пользователь с email: " + user.getEmail() + " уже существует");
             return "registration";
         }
+
         return "redirect:/login";
     }
 

@@ -14,7 +14,9 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column
     private String title;
+    @Column(nullable = true)
     private String description;
     private Integer price;
     private String city;
