@@ -2,7 +2,11 @@
 
 Добро пожаловать в онлайн-магазин! Это приложение позволяет пользователям зарегистрироваться, загружать свои товары или выбирать товары, предлагаемые другими пользователями. Вы также можете загружать и удалять фотографии товаров. Если вы являетесь администратором, у вас есть возможность блокировать пользователей.
 
+https://github.com/dr1maa/saller/tree/master/src/main/resources/static/images/screenshot 
+Тут можно посмотреть скриншоты.
+
 ## Технические детали
+
 
 Данное приложение разработано с использованием следующих технологий:
 
@@ -32,4 +36,4 @@ spring.datasource.url=jdbc:mysql://localhost:8889/saller
 spring.datasource.username=root
 spring.datasource.password=root
 
-https://github.com/dr1maa/saller/tree/master/src/main/resources/static/images/screenshot
+
